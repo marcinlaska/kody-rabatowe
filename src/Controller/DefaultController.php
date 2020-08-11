@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\DiscountCodeGenerationOptions;
+use App\Service\DiscountCodeGenerator;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController
 {
-    public function home()
+    public function home(DiscountCodeGenerator $generator)
     {
         $options = new DiscountCodeGenerationOptions;
         $form    = $this->createFormBuilder($options)
@@ -21,7 +23,8 @@ class DefaultController extends AbstractController
             ->getForm();
         
         return $this->render('home.html.twig', [
-            'form' => $form->createView()
+            'form'  => $form->createView(),
+            'codes' => $generator->run()
         ]);
     }
 }
