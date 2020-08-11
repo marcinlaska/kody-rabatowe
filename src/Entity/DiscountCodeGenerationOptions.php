@@ -24,7 +24,7 @@ class DiscountCodeGenerationOptions
     
     public function setCodeLength($codeLength)
     {
-        $this->codeCount = $codeLength;
+        $this->codeLength = $codeLength;
     }
     
     public function getCodeContent()
