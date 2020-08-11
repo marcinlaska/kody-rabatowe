@@ -1,12 +1,26 @@
 <?php
 namespace App\Service;
 
+use App\Entity\DiscountCodeGenerationOptions;
+
 class DiscountCodeGenerator
 {
     private $digits  = '0123456789';
     private $letters = 'QWERYUIOPASDHJKLZXCVBNM';
+    private $options;
     private $chars;
     private $code;
+    
+    public function setup(DiscountCodeGenerationOptions $options)
+    {
+        $this->options = $options;
+        $this->chars   = $this->digits;
+        
+        if ($options->getCodeContent() == 'alphanumeric')
+        {
+            $this->chars .= $this->letters;
+        }
+    }
     
     public function generate()
     {
