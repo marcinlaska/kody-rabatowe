@@ -36,7 +36,7 @@ class DiscountCodeGenerator
     
     protected function generate()
     {
-        $this->code = NULL;
+        $this->clearCode();
         
         for ($i = 0; $i < 5; $i++)
         {
@@ -54,5 +54,11 @@ class DiscountCodeGenerator
     protected function addCharacter($character)
     {
         $this->code .= $character;
+    }
+    
+    protected function clearCode()
+    {
+        $this->code = NULL;
+        return $this;
     }
 }
