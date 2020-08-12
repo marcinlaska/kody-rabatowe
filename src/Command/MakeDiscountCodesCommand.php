@@ -20,6 +20,13 @@ class MakeDiscountCodesCommand extends Command
         parent::__construct();
     }
     
+    protected function configure()
+    {
+        $this
+            ->setDescription('Generuje kody rabatowe')
+            ->setHelp('Generuje kody rabatowe do pliku na serwerze.');
+    }
+    
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $options = new DiscountCodeGenerationOptions;
