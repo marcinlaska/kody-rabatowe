@@ -8,15 +8,20 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class MakeDiscountCodesCommand extends Command
 {
     protected static $defaultName = 'make:discount-codes';
     protected $generator;
+    protected $filesystem;
+    protected $projectDir;
     
-    public function __construct(DiscountCodeGenerator $generator)
+    public function __construct(DiscountCodeGenerator $generator, Filesystem $filesystem, string $projectDir)
     {
-        $this->generator = $generator;
+        $this->generator  = $generator;
+        $this->filesystem = $filesystem;
+        $this->projectDir = $projectDir;
         
         parent::__construct();
     }
@@ -39,6 +44,12 @@ class MakeDiscountCodesCommand extends Command
         $options->setCodeLength($input->getArgument('length'));
         $options->setCodeContent($input->getArgument('content'));
         
-        $output->writeln($this->generator->setup($options)->run());
+        $codes    = $this->generator->setup($options)->run();
+        $filename = sprintf('kody_rabatowe_%s.txt', date('m.d.Y_H:i:s'));
+        $filePath = $this->projectDir . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . $filename;
+        
+        $this->filesystem->dumpFile($filePath, join(PHP_EOL, $codes));
+        
+        $output->writeln('Kody zostały pomyślnie wygenerowane! Znajdziesz je w pliku ' . $filePath);
     }
 }
