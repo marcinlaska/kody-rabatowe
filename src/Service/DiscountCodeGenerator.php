@@ -20,6 +20,8 @@ class DiscountCodeGenerator
         {
             $this->chars .= $this->letters;
         }
+        
+        return $this;
     }
     
     public function run()
@@ -46,7 +48,7 @@ class DiscountCodeGenerator
     
     protected function getRandomCharacter()
     {
-        return substr($this->letters, rand(0, strlen($this->letters) - 1), 1);
+        return substr($this->chars, rand(0, strlen($this->chars) - 1), 1);
     }
     
     protected function addCharacter($character)

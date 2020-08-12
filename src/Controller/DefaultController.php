@@ -28,7 +28,7 @@ class DefaultController extends AbstractController
         
         return $this->render('home.html.twig', [
             'form'  => $form->createView(),
-            'codes' => $generator->run()
+            'codes' => $generator->setup($options)->run()
         ]);
     }
 }
