@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractController
 {
-    public function home(DiscountCodeGenerator $generator)
+    public function home(DiscountCodeGenerator $generator, Request $request)
     {
         $options = new DiscountCodeGenerationOptions;
         $options->setCodeCount(3);
@@ -25,6 +25,13 @@ class DefaultController extends AbstractController
             ->add('codeContent', ChoiceType::class, ['label' => 'Z literami czy bez?', 'choices' => ['Tylko cyfry' => 'numeric', 'Cyfry i litery' => 'alphanumeric']])
             ->add('generate',    SubmitType::class, ['label' => 'Generuj!'])
             ->getForm();
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $options = $form->getData();
+        }
         
         return $this->render('home.html.twig', [
             'form'  => $form->createView(),
