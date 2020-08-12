@@ -20,15 +20,15 @@ class DefaultController extends AbstractController
         $options->setCodeContent('numeric');
         
         $form = $this->createFormBuilder($options)
-            ->add('codeCount',   NumberType::class, ['label' => 'Ile kodów?', 'html5' => true])
-            ->add('codeLength',  NumberType::class, ['label' => 'Jaka długość?', 'html5' => true])
+            ->add('codeCount',   NumberType::class, ['label' => 'Ile kodów?', 'html5' => true, 'attr' => ['min'=> 1]])
+            ->add('codeLength',  NumberType::class, ['label' => 'Jaka długość?', 'html5' => true, 'attr' => ['min'=> 3]])
             ->add('codeContent', ChoiceType::class, ['label' => 'Z literami czy bez?', 'choices' => ['Tylko cyfry' => 'numeric', 'Cyfry i litery' => 'alphanumeric']])
             ->add('generate',    SubmitType::class, ['label' => 'Generuj!'])
             ->getForm();
         
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid())
+        if ($form->isSubmitted())
         {
             $options = $form->getData();
         }
