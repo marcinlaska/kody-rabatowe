@@ -38,7 +38,7 @@ class DiscountCodeGenerator
     {
         $this->clearCode();
         
-        for ($i = 0; $i < 5; $i++)
+        for ($i = 0; $i < $this->options->getCodeLength(); $i++)
         {
             $this->addCharacter($this->getRandomCharacter());
         }
