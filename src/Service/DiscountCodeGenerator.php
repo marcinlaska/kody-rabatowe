@@ -22,7 +22,17 @@ class DiscountCodeGenerator
         }
     }
     
-    public function generate()
+    public function run()
+    {
+        return [
+            $this->generate()->code,
+            $this->generate()->code,
+            $this->generate()->code,
+            $this->generate()->code
+        ];
+    }
+    
+    protected function generate()
     {
         $this->code = NULL;
         
@@ -34,23 +44,13 @@ class DiscountCodeGenerator
         return $this;
     }
     
-    public function getRandomCharacter()
+    protected function getRandomCharacter()
     {
         return substr($this->letters, rand(0, strlen($this->letters) - 1), 1);
     }
     
-    public function addCharacter($character)
+    protected function addCharacter($character)
     {
         $this->code .= $character;
-    }
-    
-    public function run()
-    {
-        return [
-            $this->generate()->code,
-            $this->generate()->code,
-            $this->generate()->code,
-            $this->generate()->code
-        ];
     }
 }
