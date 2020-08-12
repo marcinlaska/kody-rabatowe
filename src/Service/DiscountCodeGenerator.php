@@ -26,12 +26,16 @@ class DiscountCodeGenerator
     
     public function run()
     {
-        return [
-            $this->generate()->code,
-            $this->generate()->code,
-            $this->generate()->code,
-            $this->generate()->code
-        ];
+        $codes = array();
+        
+        for ($i = 0; $i < $this->options->getCodeCount(); $i++)
+        {
+            $codes[] = $this->generate()->code;
+        }
+        
+        $this->clearCode();
+        
+        return $codes;
     }
     
     protected function generate()
