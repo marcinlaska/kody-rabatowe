@@ -3,7 +3,10 @@
 {% block body %}
     {{ form(form) }}
     
+    Wygenerowane kody:
+    <ul>
     {% for code in codes %}
-        <p>{{ code }}</p>
+        <li>{{ code }}</li>
     {% endfor %}
+    </ul>
 {% endblock %}
